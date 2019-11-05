@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"net"
 	"sync"
+
+	"github.com/fatih/color"
 )
 
 var wg = &sync.WaitGroup{}
@@ -24,9 +26,9 @@ func main() {
 func Scanner(url string, port int) {
 	_, err := net.Dial("tcp", fmt.Sprintf("%s:%d", url, port))
 	if err == nil {
-		fmt.Printf("%s port %d is open\n", url, port)
+		color.Green("%s port %d is open\n", url, port)
 	} else {
-		fmt.Println(err)
+		color.Red("%s", err.Error())
 	}
 	defer wg.Done()
 }
