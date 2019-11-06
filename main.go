@@ -16,6 +16,8 @@ func main() {
 	startPort := flag.Int("start-port", 1, "the start port to scan")
 	endPort := flag.Int("end-port", 100, "the end port to scan")
 
+	flag.Parse()
+
 	for i := *startPort; i <= *endPort; i++ {
 		wg.Add(1)
 		go Scanner(*hostname, i)
