@@ -5,11 +5,13 @@ import (
 	"fmt"
 	"net"
 	"sync"
+	"time"
 
 	"github.com/fatih/color"
 )
 
 var wg = &sync.WaitGroup{}
+var timeout = time.Millisecond * 200
 
 func main() {
 	hostname := flag.String("hostname", "localhost", "hostname to scan ports")
@@ -26,7 +28,7 @@ func main() {
 }
 
 func Scanner(url string, port int) {
-	_, err := net.Dial("tcp", fmt.Sprintf("%s:%d", url, port))
+	_, err := net.DialTimeout("tcp", fmt.Sprintf("%s:%d", url, port), timeout)
 	if err == nil {
 		color.Green("%s port %d is open\n", url, port)
 	} else {
